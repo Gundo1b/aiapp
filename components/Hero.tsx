@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from './Button';
-import { ArrowRight, PlayCircle, Sparkles, Send, Mic, Image as ImageIcon, MoreVertical, Battery, Wifi, Signal } from 'lucide-react';
+import { ArrowRight, PlayCircle, Sparkles, Send, Mic, Image as ImageIcon, MoreVertical, Battery, Wifi, Signal, ChevronDown } from 'lucide-react';
 import { LogoIcon } from './Logo';
 import { TextReveal } from './ui/TextReveal';
 
 export const Hero: React.FC = () => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: (e.clientX - window.innerWidth / 2) / 50,
+        y: (e.clientY - window.innerHeight / 2) / 50,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   const scrollToPricing = () => {
     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -15,10 +29,19 @@ export const Hero: React.FC = () => {
 
   return (
     <section className="relative pt-24 pb-12 md:pt-32 lg:pt-40 md:pb-20 overflow-hidden">
-      {/* Animated Aurora Background Effects */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#64E1FF]/20 dark:bg-[#64E1FF]/10 rounded-full blur-[100px] -z-10 animate-blob" />
-      <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-[#a78bfa]/20 dark:bg-[#a78bfa]/10 rounded-full blur-[120px] -z-10 animate-blob animation-delay-2000" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#009DFF]/10 dark:bg-[#009DFF]/5 rounded-full blur-[100px] -z-10 animate-blob animation-delay-4000" />
+      {/* Animated Aurora Background Effects with Parallax */}
+      <div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#64E1FF]/20 dark:bg-[#64E1FF]/10 rounded-full blur-[100px] -z-10 animate-blob transition-transform duration-100 ease-out" 
+        style={{ transform: `translate(calc(-50% + ${mousePos.x * -1}px), ${mousePos.y * -1}px)` }}
+      />
+      <div 
+        className="absolute top-20 right-0 w-[600px] h-[600px] bg-[#a78bfa]/20 dark:bg-[#a78bfa]/10 rounded-full blur-[120px] -z-10 animate-blob animation-delay-2000 transition-transform duration-100 ease-out" 
+        style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}
+      />
+      <div 
+        className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#009DFF]/10 dark:bg-[#009DFF]/5 rounded-full blur-[100px] -z-10 animate-blob animation-delay-4000 transition-transform duration-100 ease-out" 
+        style={{ transform: `translate(${mousePos.x * 2}px, ${mousePos.y * 2}px)` }}
+      />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -52,16 +75,17 @@ export const Hero: React.FC = () => {
 
                     {/* Chat Header */}
                     <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 z-10 sticky top-12">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center text-white">
                                 <LogoIcon className="w-5 h-5 text-white" />
                             </div>
-                            <div>
-                                <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-none">Integen AI</h3>
-                                <span className="text-[10px] text-green-500 font-medium flex items-center gap-1">
-                                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                                    Online
-                                </span>
+                            <div className="flex items-center gap-1 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 px-2 py-1 rounded-lg transition-colors">
+                                <div>
+                                    <h3 className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-none">Model</h3>
+                                    <p className="text-sm font-bold text-slate-900 dark:text-white leading-none flex items-center gap-1">
+                                        GPT-4o <ChevronDown size={12} />
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <MoreVertical size={18} className="text-slate-400" />
@@ -77,7 +101,7 @@ export const Hero: React.FC = () => {
                             </div>
                             <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[85%]">
                                 <p className="text-sm text-slate-700 dark:text-slate-300">
-                                    Hello! I'm ready to help you create. What are we building today?
+                                    Hello! I'm ready to help. You can switch models anytime.
                                 </p>
                             </div>
                         </div>
@@ -86,7 +110,7 @@ export const Hero: React.FC = () => {
                         <div className="flex items-end justify-end animate-fade-in-up animate-delay-500">
                             <div className="bg-[#009DFF] text-white rounded-2xl rounded-tr-none p-3 shadow-sm max-w-[85%]">
                                 <p className="text-sm">
-                                    Write a Python script to automate my daily stock analysis reports.
+                                    Write a Python script for stock analysis.
                                 </p>
                             </div>
                         </div>
@@ -97,8 +121,13 @@ export const Hero: React.FC = () => {
                                 <LogoIcon className="w-5 h-5 text-white" />
                             </div>
                             <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[85%] w-full">
+                                <div className="flex items-center gap-2 mb-2">
+                                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">
+                                        GPT-4o
+                                     </span>
+                                </div>
                                 <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-                                    Sure! Here's a script using <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded text-xs">pandas</code> and <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded text-xs">yfinance</code>:
+                                    Sure! Here's a script using <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded text-xs">yfinance</code>:
                                 </p>
                                 <div className="bg-slate-950 rounded-lg p-3 my-2 border border-slate-800 relative group overflow-hidden">
                                      {/* Code shimmers */}
@@ -111,10 +140,6 @@ export const Hero: React.FC = () => {
                                         &nbsp;&nbsp;data = yf.Ticker(ticker)<br/>
                                         &nbsp;&nbsp;<span className="text-slate-500"># Fetch history...</span>
                                      </div>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                    <span className="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full text-slate-500">Python</span>
-                                    <span className="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full text-slate-500">Finance</span>
                                 </div>
                             </div>
                         </div>
@@ -201,13 +226,17 @@ export const Hero: React.FC = () => {
             
             <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center lg:justify-start gap-6 animate-fade-in-up animate-delay-500">
               <div className="flex -space-x-3">
-                {[1,2,3,4].map(i => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800 overflow-hidden hover:translate-y-[-5px] transition-transform duration-300 z-0 hover:z-10">
+                {[1,2,3,4].map((i, idx) => (
+                  <div 
+                    key={i} 
+                    style={{ animationDelay: `${idx * 100 + 500}ms` }}
+                    className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800 overflow-hidden hover:translate-y-[-5px] transition-transform duration-300 z-0 hover:z-10 animate-fade-in-up"
+                  >
                     <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-slate-500 dark:text-slate-400 animate-fade-in-up animate-delay-1000">
                 Trusted by <span className="font-bold text-slate-900 dark:text-white">10,000+</span> creators
               </p>
             </div>

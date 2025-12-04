@@ -2,11 +2,13 @@ import React from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
+import { ModelShowcase } from './components/ModelShowcase';
 import { Advantages } from './components/Advantages';
 import { Pricing } from './components/Pricing';
 import { Roadmap } from './components/Roadmap';
 import { CallToAction } from './components/CallToAction';
 import { Footer } from './components/Footer';
+import { WhyNow } from './components/WhyNow';
 
 const App: React.FC = () => {
   return (
@@ -27,9 +29,11 @@ const App: React.FC = () => {
         <main>
           <Hero />
           <Features />
+          <ModelShowcase />
           <Advantages />
           <Pricing />
           <Roadmap />
+          <WhyNow />
           <CallToAction />
         </main>
         <Footer />

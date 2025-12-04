@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MessageSquare, Code2, Image as ImageIcon, Video, Mic, Wand2 } from 'lucide-react';
 import { Feature } from '../types';
 import { ScrollReveal } from './ScrollReveal';
+import { Spotlight } from './ui/Spotlight';
 
 const features: Feature[] = [
   {
@@ -41,6 +42,36 @@ const features: Feature[] = [
   }
 ];
 
+// Helper to simulate typing effect on hover
+const TypingCommand = ({ text }: { text: string }) => {
+  const [displayText, setDisplayText] = useState(text);
+  
+  const handleMouseEnter = () => {
+    // Reset to just slash
+    setDisplayText('/');
+    let i = 1;
+    const interval = setInterval(() => {
+      setDisplayText(text.substring(0, i + 1));
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, 80);
+  };
+
+  const handleMouseLeave = () => {
+    setDisplayText(text);
+  };
+
+  return (
+    <code 
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-xs font-mono text-slate-500 dark:text-slate-400 group-hover:bg-slate-800 group-hover:text-white transition-colors"
+    >
+      {displayText}<span className="animate-pulse inline-block ml-[1px]">_</span>
+    </code>
+  );
+};
+
 export const Features: React.FC = () => {
   return (
     <section id="features" className="pt-0 pb-24 relative overflow-hidden">
@@ -62,33 +93,32 @@ export const Features: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <ScrollReveal key={feature.id} delay={index * 100}>
-              <div 
-                className="group relative p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full cursor-pointer"
-              >
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#64E1FF] to-[#009DFF] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-t-2xl origin-left"></div>
-                
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-slate-800 flex items-center justify-center text-[#009DFF] group-hover:bg-[#009DFF] group-hover:text-white transition-colors duration-300 group-hover:scale-110 transform">
-                    <feature.icon size={24} />
+              <Spotlight className="h-full rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="group relative p-8 h-full cursor-pointer">
+                  {/* Top Highlight Line */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#64E1FF] to-[#009DFF] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-t-2xl origin-left"></div>
+                  
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-slate-800 flex items-center justify-center text-[#009DFF] group-hover:bg-[#009DFF] group-hover:text-white transition-colors duration-300 group-hover:scale-110 transform">
+                      <feature.icon size={24} />
+                    </div>
+                    <TypingCommand text={feature.command} />
                   </div>
-                  <code className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-xs font-mono text-slate-500 dark:text-slate-400 group-hover:bg-slate-800 group-hover:text-white transition-colors">
-                    {feature.command}
-                  </code>
+                  
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{feature.title}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{feature.description}</p>
+                  
+                  <div className="mt-6 flex items-center text-sm font-medium text-[#009DFF] opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                    Try it now <Wand2 className="ml-2 w-4 h-4" />
+                  </div>
                 </div>
-                
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{feature.title}</h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{feature.description}</p>
-                
-                <div className="mt-6 flex items-center text-sm font-medium text-[#009DFF] opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                  Try it now <Wand2 className="ml-2 w-4 h-4" />
-                </div>
-              </div>
+              </Spotlight>
             </ScrollReveal>
           ))}
           
           {/* Callout Card */}
           <ScrollReveal delay={500}>
-            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-950 text-white shadow-xl flex flex-col justify-center items-center text-center h-full group overflow-hidden">
+            <div className="relative p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-950 text-white shadow-xl flex flex-col justify-center items-center text-center h-full group overflow-hidden border border-slate-700">
                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 group-hover:scale-110 transition-transform duration-700"></div>
                <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-500/20 rounded-full blur-2xl group-hover:bg-blue-500/30 transition-colors"></div>
                

@@ -56,8 +56,8 @@ export const Roadmap: React.FC = () => {
   return (
     <section id="audience" className="py-24 bg-slate-50 dark:bg-slate-950 overflow-hidden relative transition-colors duration-300">
       {/* Background decorations */}
-      <div className="absolute top-1/4 left-0 w-[400px] h-[400px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[80px] -z-10"></div>
-      <div className="absolute bottom-1/4 right-0 w-[300px] h-[300px] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[80px] -z-10"></div>
+      <div className="absolute top-1/4 left-0 w-[400px] h-[400px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[80px] -z-10 animate-pulse-slow"></div>
+      <div className="absolute bottom-1/4 right-0 w-[300px] h-[300px] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[80px] -z-10 animate-pulse-slow"></div>
 
       <div className="container mx-auto px-4 md:px-6">
         <ScrollReveal>
@@ -73,7 +73,7 @@ export const Roadmap: React.FC = () => {
 
         <div className="relative max-w-4xl mx-auto">
           {/* Vertical Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#64E1FF] via-[#009DFF] to-slate-200 dark:to-slate-800 md:-translate-x-1/2"></div>
+          <div className="absolute left-8 md:left-1/2 top-0 h-full w-0.5 bg-gradient-to-b from-[#64E1FF] via-[#009DFF] to-slate-200 dark:to-slate-800 md:-translate-x-1/2 origin-top animate-grow-height"></div>
 
           <div className="space-y-12">
             {audiences.map((phase, index) => {
