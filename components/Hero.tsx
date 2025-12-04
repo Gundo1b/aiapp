@@ -46,8 +46,68 @@ export const Hero: React.FC = () => {
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column: Mobile Phone Mockup */}
-          <div className="relative w-full perspective-1000 flex justify-center lg:justify-end">
+          {/* Text Content (First in DOM, Left on Desktop, Top on Mobile) */}
+          <div className="text-center lg:text-left order-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-sm font-medium mb-4 md:mb-6 animate-fade-in-up mx-auto lg:mx-0 shadow-sm hover:shadow-md transition-shadow cursor-default">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              </span>
+              v1.0 Early Access is Open
+            </div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 md:mb-6 leading-tight">
+              <TextReveal distance={50} stiffness={30} damping={18}>One platform, endless</TextReveal> <br />
+              <TextReveal 
+                className="bg-clip-text text-transparent bg-gradient-to-r from-[#64E1FF] via-[#009DFF] to-[#a78bfa]"
+                delay={0.5}
+                distance={50}
+                stiffness={30}
+                damping={18}
+              >
+                creative intelligence.
+              </TextReveal>
+            </h1>
+
+            <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-fade-in-up animate-delay-200">
+              The all-in-one workspace that fuses chat, code, image, video, and voice generation. 
+              Stop juggling tools. Start creating.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 animate-fade-in-up animate-delay-300">
+              <Button size="lg" className="w-full sm:w-auto group relative overflow-hidden" onClick={scrollToPricing}>
+                <span className="relative z-10 flex items-center">
+                  Start Building Free
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              </Button>
+              <Button variant="secondary" size="lg" className="w-full sm:w-auto" onClick={scrollToFeatures}>
+                <PlayCircle className="mr-2 w-5 h-5 text-slate-500 dark:text-slate-400" />
+                Watch Demo
+              </Button>
+            </div>
+            
+            <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center lg:justify-start gap-6 animate-fade-in-up animate-delay-500">
+              <div className="flex -space-x-3">
+                {[1,2,3,4].map((i, idx) => (
+                  <div 
+                    key={i} 
+                    style={{ animationDelay: `${idx * 100 + 500}ms` }}
+                    className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800 overflow-hidden hover:translate-y-[-5px] transition-transform duration-300 z-0 hover:z-10 animate-fade-in-up"
+                  >
+                    <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-slate-500 dark:text-slate-400 animate-fade-in-up animate-delay-1000">
+                Trusted by <span className="font-bold text-slate-900 dark:text-white">10,000+</span> creators
+              </p>
+            </div>
+          </div>
+
+          {/* Mobile Phone Mockup (Second in DOM, Right on Desktop, Bottom on Mobile) */}
+          <div className="relative w-full perspective-1000 flex justify-center lg:justify-center order-2">
              {/* Decorative Blobs behind the phone */}
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-[#009DFF]/30 to-[#64E1FF]/30 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
 
@@ -183,63 +243,6 @@ export const Hero: React.FC = () => {
                     </div>
                  </div>
              </div>
-          </div>
-
-          {/* Right Column: Text Content */}
-          <div className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-sm font-medium mb-4 md:mb-6 animate-fade-in-up mx-auto lg:mx-0 shadow-sm hover:shadow-md transition-shadow cursor-default">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-              </span>
-              v1.0 Early Access is Open
-            </div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 md:mb-6 leading-tight">
-              <TextReveal>One platform, endless</TextReveal> <br />
-              <TextReveal 
-                className="bg-clip-text text-transparent bg-gradient-to-r from-[#64E1FF] via-[#009DFF] to-[#a78bfa]"
-                delay={0.5}
-              >
-                creative intelligence.
-              </TextReveal>
-            </h1>
-
-            <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-fade-in-up animate-delay-200">
-              The all-in-one workspace that fuses chat, code, image, video, and voice generation. 
-              Stop juggling tools. Start creating.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 animate-fade-in-up animate-delay-300">
-              <Button size="lg" className="w-full sm:w-auto group relative overflow-hidden" onClick={scrollToPricing}>
-                <span className="relative z-10 flex items-center">
-                  Start Building Free
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-              </Button>
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto" onClick={scrollToFeatures}>
-                <PlayCircle className="mr-2 w-5 h-5 text-slate-500 dark:text-slate-400" />
-                Watch Demo
-              </Button>
-            </div>
-            
-            <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center lg:justify-start gap-6 animate-fade-in-up animate-delay-500">
-              <div className="flex -space-x-3">
-                {[1,2,3,4].map((i, idx) => (
-                  <div 
-                    key={i} 
-                    style={{ animationDelay: `${idx * 100 + 500}ms` }}
-                    className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800 overflow-hidden hover:translate-y-[-5px] transition-transform duration-300 z-0 hover:z-10 animate-fade-in-up"
-                  >
-                    <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 animate-fade-in-up animate-delay-1000">
-                Trusted by <span className="font-bold text-slate-900 dark:text-white">10,000+</span> creators
-              </p>
-            </div>
           </div>
           
         </div>

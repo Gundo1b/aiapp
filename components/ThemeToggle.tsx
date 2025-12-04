@@ -16,14 +16,29 @@ export const ThemeToggle: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <Sun className={`h-4 w-4 transition-colors ${!isDark ? 'text-[#009DFF]' : 'text-slate-400'}`} />
+    <div className="flex items-center gap-2 group" role="group" aria-label="Theme toggle">
+      <Sun 
+        className={`h-4 w-4 transition-all duration-300 ${
+          !isDark 
+            ? 'text-[#009DFF] scale-110 drop-shadow-[0_0_8px_rgba(0,157,255,0.5)]' 
+            : 'text-slate-400 scale-90 opacity-50'
+        }`} 
+        aria-hidden="true"
+      />
       <Switch 
         checked={isDark} 
         onCheckedChange={handleCheckedChange} 
         aria-label="Toggle Dark Mode"
+        title="Toggle Dark Mode"
       />
-      <Moon className={`h-4 w-4 transition-colors ${isDark ? 'text-[#009DFF]' : 'text-slate-400'}`} />
+      <Moon 
+        className={`h-4 w-4 transition-all duration-300 ${
+          isDark 
+            ? 'text-[#009DFF] scale-110 drop-shadow-[0_0_8px_rgba(0,157,255,0.5)]' 
+            : 'text-slate-400 scale-90 opacity-50'
+        }`} 
+        aria-hidden="true"
+      />
     </div>
   );
 };

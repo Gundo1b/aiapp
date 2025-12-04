@@ -51,8 +51,14 @@ export const Pricing: React.FC = () => {
   };
 
   return (
-    <section id="pricing" className="py-24 relative">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="pricing" className="py-24 relative overflow-hidden">
+      {/* Background Animated Blobs */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-purple-100/30 dark:bg-purple-900/10 rounded-full blur-[100px] -translate-x-1/2 animate-blob"></div>
+        <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-blue-100/30 dark:bg-blue-900/10 rounded-full blur-[100px] translate-x-1/2 animate-blob animation-delay-2000"></div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Simple, unified pricing</h2>

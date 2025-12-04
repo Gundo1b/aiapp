@@ -32,13 +32,6 @@ const features: Feature[] = [
     description: 'Motion design and storytelling automation to bring narratives to life.',
     icon: Video,
     command: '/video'
-  },
-  {
-    id: 'voice',
-    title: 'Voice & Audio v2.0',
-    description: 'High-fidelity speech synthesis and recognition for voice-enabled projects.',
-    icon: Mic,
-    command: '/audio'
   }
 ];
 
@@ -75,7 +68,13 @@ const TypingCommand = ({ text }: { text: string }) => {
 export const Features: React.FC = () => {
   return (
     <section id="features" className="pt-0 pb-24 relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6">
+      {/* Ambient Background Blobs */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        <div className="absolute top-[10%] left-[5%] w-96 h-96 bg-[#64E1FF]/5 dark:bg-[#64E1FF]/5 rounded-full blur-[80px] animate-blob"></div>
+        <div className="absolute bottom-[20%] right-[10%] w-80 h-80 bg-[#009DFF]/5 dark:bg-[#009DFF]/5 rounded-full blur-[80px] animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">

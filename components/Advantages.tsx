@@ -23,8 +23,14 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export const Advantages: React.FC = () => {
   return (
-    <section id="advantages" className="py-24 bg-slate-50 dark:bg-slate-950 relative transition-colors duration-300">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="advantages" className="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+      {/* Background Decoration */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-100/40 dark:bg-blue-900/10 rounded-full blur-3xl -translate-y-1/2 animate-blob opacity-50"></div>
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-100/40 dark:bg-purple-900/10 rounded-full blur-3xl translate-y-1/2 animate-blob animation-delay-2000 opacity-50"></div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <ScrollReveal>
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
@@ -39,7 +45,7 @@ export const Advantages: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {advantages.map((adv, index) => (
             <ScrollReveal key={adv.category} delay={index * 100}>
-              <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full group">
+              <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full group relative z-10">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="p-3 rounded-xl bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 group-hover:bg-[#009DFF] group-hover:text-white transition-colors duration-300 group-hover:scale-110 group-hover:rotate-6 transform">
                     {iconMap[adv.category]}

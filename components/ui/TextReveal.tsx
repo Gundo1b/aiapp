@@ -7,6 +7,9 @@ interface TextRevealProps {
   from?: 'bottom' | 'top' | 'left' | 'right';
   split?: 'letter' | 'word'; // Currently optimized for 'letter'
   delay?: number;
+  distance?: number;
+  stiffness?: number;
+  damping?: number;
 }
 
 export const TextReveal: React.FC<TextRevealProps> = ({ 
@@ -14,7 +17,10 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   className = "", 
   from = "bottom",
   split = "letter",
-  delay = 0 
+  delay = 0,
+  distance = 20,
+  stiffness = 50,
+  damping = 15
 }) => {
   const letters = children.split("");
 
@@ -23,7 +29,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
     visible: (i = 1) => ({
       opacity: 1,
       transition: { 
-        staggerChildren: 0.1, // Slower sequence (was 0.03)
+        staggerChildren: 0.1, 
         delayChildren: delay 
       },
     }),
@@ -31,11 +37,11 @@ export const TextReveal: React.FC<TextRevealProps> = ({
 
   const getInitialPosition = () => {
     switch (from) {
-      case 'bottom': return { y: 20 };
-      case 'top': return { y: -20 };
-      case 'left': return { x: -20 };
-      case 'right': return { x: 20 };
-      default: return { y: 20 };
+      case 'bottom': return { y: distance };
+      case 'top': return { y: -distance };
+      case 'left': return { x: -distance };
+      case 'right': return { x: distance };
+      default: return { y: distance };
     }
   };
 
@@ -46,8 +52,8 @@ export const TextReveal: React.FC<TextRevealProps> = ({
       y: 0,
       transition: {
         type: "spring",
-        damping: 15, // Increased damping for less bounce/slower settle
-        stiffness: 50, // Reduced stiffness for slower movement
+        damping: damping,
+        stiffness: stiffness,
       },
     },
     hidden: {
@@ -55,8 +61,8 @@ export const TextReveal: React.FC<TextRevealProps> = ({
       ...getInitialPosition(),
       transition: {
         type: "spring",
-        damping: 15,
-        stiffness: 50,
+        damping: damping,
+        stiffness: stiffness,
       },
     },
   };
