@@ -52,9 +52,9 @@ export const Hero: React.FC = () => {
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none"
         style={{ transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px)` }}
       >
-        <FluidBlob className="top-[-10%] left-[20%] w-[600px] h-[600px]" color1="#64E1FF" color2="#009DFF" />
-        <FluidBlob className="top-[20%] right-[-10%] w-[500px] h-[500px] animation-delay-2000" color1="#a78bfa" color2="#64E1FF" />
-        <FluidBlob className="bottom-[-10%] left-[-10%] w-[500px] h-[500px] animation-delay-4000" color1="#009DFF" color2="#a78bfa" />
+        <FluidBlob className="top-[-10%] left-[20%] w-[600px] h-[600px]" color1="#60A5FA" color2="#3B82F6" />
+        <FluidBlob className="top-[20%] right-[-10%] w-[500px] h-[500px] animation-delay-2000" color1="#a78bfa" color2="#60A5FA" />
+        <FluidBlob className="bottom-[-10%] left-[-10%] w-[500px] h-[500px] animation-delay-4000" color1="#3B82F6" color2="#a78bfa" />
       </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -62,18 +62,18 @@ export const Hero: React.FC = () => {
           
           {/* Text Content (First in DOM, Left on Desktop, Top on Mobile) */}
           <div className="text-center lg:text-left order-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-sm font-medium mb-4 md:mb-6 animate-fade-in-up mx-auto lg:mx-0 shadow-sm hover:shadow-md transition-shadow cursor-default">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-primary dark:text-blue-400 text-sm font-medium mb-4 md:mb-6 animate-fade-in-up mx-auto lg:mx-0 shadow-sm hover:shadow-md transition-shadow cursor-default">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
               v1.0 Early Access is Open
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 md:mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground dark:text-white mb-4 md:mb-6 leading-tight">
               <TextReveal distance={50} stiffness={30} damping={18}>One platform, endless</TextReveal> <br />
               <TextReveal 
-                className="bg-clip-text text-transparent bg-gradient-to-r from-[#64E1FF] via-[#009DFF] to-[#a78bfa]"
+                className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-500 to-[#a78bfa]"
                 delay={0.5}
                 distance={50}
                 stiffness={30}
@@ -83,7 +83,7 @@ export const Hero: React.FC = () => {
               </TextReveal>
             </h1>
 
-            <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-fade-in-up animate-delay-200">
+            <p className="text-lg text-muted-foreground dark:text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-fade-in-up animate-delay-200">
               The all-in-one workspace that fuses chat, code, image, video, and voice generation. 
               Stop juggling tools. Start creating.
             </p>
@@ -97,25 +97,25 @@ export const Hero: React.FC = () => {
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               </Button>
               <Button variant="secondary" size="lg" className="w-full sm:w-auto" onClick={scrollToFeatures}>
-                <PlayCircle className="mr-2 w-5 h-5 text-slate-500 dark:text-slate-400" />
+                <PlayCircle className="mr-2 w-5 h-5 text-muted-foreground dark:text-slate-400" />
                 Watch Demo
               </Button>
             </div>
             
-            <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center lg:justify-start gap-6 animate-fade-in-up animate-delay-500">
+            <div className="mt-8 pt-8 border-t border-border dark:border-slate-800 flex items-center justify-center lg:justify-start gap-6 animate-fade-in-up animate-delay-500">
               <div className="flex -space-x-3">
                 {[1,2,3,4].map((i, idx) => (
                   <div 
                     key={i} 
                     style={{ animationDelay: `${idx * 100 + 500}ms` }}
-                    className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800 overflow-hidden hover:translate-y-[-5px] transition-transform duration-300 z-0 hover:z-10 animate-fade-in-up"
+                    className="w-10 h-10 rounded-full border-2 border-background dark:border-slate-950 bg-secondary dark:bg-slate-800 overflow-hidden hover:translate-y-[-5px] transition-transform duration-300 z-0 hover:z-10 animate-fade-in-up"
                   >
                     <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 animate-fade-in-up animate-delay-1000">
-                Trusted by <span className="font-bold text-slate-900 dark:text-white">10,000+</span> creators
+              <p className="text-sm text-muted-foreground dark:text-slate-400 animate-fade-in-up animate-delay-1000">
+                Trusted by <span className="font-bold text-foreground dark:text-white">10,000+</span> creators
               </p>
             </div>
           </div>
@@ -123,7 +123,7 @@ export const Hero: React.FC = () => {
           {/* Mobile Phone Mockup (Second in DOM, Right on Desktop, Bottom on Mobile) */}
           <div className="relative w-full perspective-1000 flex justify-center lg:justify-center order-2">
              {/* Decorative Blobs behind the phone */}
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-[#009DFF]/30 to-[#64E1FF]/30 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-primary/30 to-blue-400/30 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
 
              {/* Phone Frame */}
              <div className="relative mx-auto border-slate-900 dark:border-slate-800 bg-slate-900 border-[12px] rounded-[3rem] h-[600px] w-[300px] shadow-2xl animate-float ring-1 ring-white/10">
@@ -135,7 +135,7 @@ export const Hero: React.FC = () => {
                 <div className="h-[70px] w-[3px] bg-slate-800 absolute -end-[15px] top-[140px] rounded-e-lg shadow-sm"></div>
 
                 {/* Screen Content */}
-                <div className="rounded-[2.25rem] overflow-hidden w-full h-full bg-slate-50 dark:bg-slate-950 flex flex-col relative z-0">
+                <div className="rounded-[2.25rem] overflow-hidden w-full h-full bg-secondary dark:bg-slate-950 flex flex-col relative z-0">
                     
                     {/* Wallpaper Pattern */}
                     <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(#000000_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
@@ -155,9 +155,9 @@ export const Hero: React.FC = () => {
                     </div>
 
                     {/* Chat Header */}
-                    <div className="px-4 py-2 flex items-center justify-between z-20 backdrop-blur-md bg-white/70 dark:bg-slate-900/70 sticky top-0 border-b border-slate-200/50 dark:border-slate-800/50">
+                    <div className="px-4 py-2 flex items-center justify-between z-20 backdrop-blur-md bg-white/70 dark:bg-slate-900/70 sticky top-0 border-b border-border/50 dark:border-slate-800/50">
                         <div className="flex items-center gap-2.5">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center text-white shadow-sm ring-2 ring-white dark:ring-slate-800">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#60A5FA] to-[#3B82F6] flex items-center justify-center text-white shadow-sm ring-2 ring-white dark:ring-slate-800">
                                 <LogoIcon className="w-5 h-5 text-white" />
                             </div>
                             <div className="flex flex-col">
@@ -168,13 +168,13 @@ export const Hero: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-1 cursor-pointer">
-                                  <span className="text-[11px] font-medium text-[#009DFF]">GPT-4o</span>
-                                  <ChevronDown size={10} className="text-[#009DFF]" />
+                                  <span className="text-[11px] font-medium text-primary">GPT-4o</span>
+                                  <ChevronDown size={10} className="text-primary" />
                                 </div>
                             </div>
                         </div>
                         <button className="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors">
-                           <MoreVertical size={20} className="text-slate-500 dark:text-slate-400" />
+                           <MoreVertical size={20} className="text-muted-foreground dark:text-slate-400" />
                         </button>
                     </div>
 
@@ -183,7 +183,7 @@ export const Hero: React.FC = () => {
                         
                         {/* AI Greeting - Always Visible */}
                         <div className={`flex items-start gap-2.5 animate-scale-up origin-bottom-left`}>
-                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center shrink-0 shadow-sm mt-1">
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#60A5FA] to-[#3B82F6] flex items-center justify-center shrink-0 shadow-sm mt-1">
                                 <LogoIcon className="w-4 h-4 text-white" />
                             </div>
                             <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm max-w-[85%]">
@@ -196,7 +196,7 @@ export const Hero: React.FC = () => {
                         {/* User Question - Visible from Step 1 */}
                         {chatStep >= 1 && (
                             <div className="flex items-end justify-end animate-scale-up origin-bottom-right">
-                                <div className="bg-[#009DFF] text-white rounded-2xl rounded-tr-none px-4 py-3 shadow-md shadow-blue-500/10 max-w-[85%]">
+                                <div className="bg-primary text-primary-foreground rounded-2xl rounded-tr-none px-4 py-3 shadow-md shadow-blue-500/10 max-w-[85%]">
                                     <p className="text-[15px] leading-relaxed">
                                         Write a Python script for stock analysis.
                                     </p>
@@ -207,7 +207,7 @@ export const Hero: React.FC = () => {
                         {/* AI Typing Indicator - Visible at Step 2 only */}
                         {chatStep === 2 && (
                             <div className="flex items-start gap-2.5 animate-scale-up origin-bottom-left">
-                                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center shrink-0 shadow-sm mt-1">
+                                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#60A5FA] to-[#3B82F6] flex items-center justify-center shrink-0 shadow-sm mt-1">
                                     <LogoIcon className="w-4 h-4 text-white" />
                                 </div>
                                 <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm">
@@ -223,7 +223,7 @@ export const Hero: React.FC = () => {
                         {/* AI Response - Visible from Step 3 */}
                         {chatStep >= 3 && (
                             <div className="flex items-start gap-2.5 animate-scale-up origin-bottom-left">
-                                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center shrink-0 shadow-sm mt-1">
+                                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#60A5FA] to-[#3B82F6] flex items-center justify-center shrink-0 shadow-sm mt-1">
                                     <LogoIcon className="w-4 h-4 text-white" />
                                 </div>
                                 <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[90%] w-full">
@@ -255,20 +255,20 @@ export const Hero: React.FC = () => {
                     </div>
 
                     {/* Input Area */}
-                    <div className="p-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-800/50 z-20 pb-6">
-                        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-full border border-slate-200 dark:border-slate-700/50 shadow-inner">
-                             <button className="p-2 text-slate-400 hover:text-[#009DFF] transition-colors rounded-full hover:bg-white dark:hover:bg-slate-700">
+                    <div className="p-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-border/50 dark:border-slate-800/50 z-20 pb-6">
+                        <div className="flex items-center gap-2 bg-secondary dark:bg-slate-800 p-1.5 rounded-full border border-border dark:border-slate-700/50 shadow-inner">
+                             <button className="p-2 text-slate-400 hover:text-primary transition-colors rounded-full hover:bg-white dark:hover:bg-slate-700">
                                 <ImageIcon size={20} strokeWidth={1.5} />
                              </button>
                              <input 
                                 type="text" 
                                 placeholder="Message..." 
-                                className="flex-1 bg-transparent border-none outline-none text-[15px] text-slate-900 dark:text-white placeholder:text-slate-400 px-1"
+                                className="flex-1 bg-transparent border-none outline-none text-[15px] text-foreground dark:text-white placeholder:text-muted-foreground px-1"
                              />
-                             <button className="p-2 text-slate-400 hover:text-[#009DFF] transition-colors rounded-full hover:bg-white dark:hover:bg-slate-700">
+                             <button className="p-2 text-slate-400 hover:text-primary transition-colors rounded-full hover:bg-white dark:hover:bg-slate-700">
                                 <Mic size={20} strokeWidth={1.5} />
                              </button>
-                             <button className="p-2 bg-[#009DFF] text-white rounded-full hover:shadow-lg hover:shadow-blue-500/30 transition-all active:scale-95 flex items-center justify-center w-9 h-9">
+                             <button className="p-2 bg-primary text-primary-foreground rounded-full hover:shadow-lg hover:shadow-blue-500/30 transition-all active:scale-95 flex items-center justify-center w-9 h-9">
                                 <Send size={16} className="ml-0.5" />
                              </button>
                         </div>
@@ -282,14 +282,14 @@ export const Hero: React.FC = () => {
              </div>
 
              {/* Floating Elements around phone */}
-             <div className="absolute top-[20%] right-[-10px] lg:right-[10%] bg-white dark:bg-slate-800 p-3 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 animate-float animation-delay-2000 z-20">
+             <div className="absolute top-[20%] right-[-10px] lg:right-[10%] bg-card dark:bg-slate-800 p-3 rounded-xl shadow-xl border border-border dark:border-slate-700 animate-float animation-delay-2000 z-20">
                  <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center text-purple-600 dark:text-purple-400">
                         <Sparkles size={16} />
                     </div>
                     <div>
-                        <p className="text-xs font-bold text-slate-900 dark:text-white">Code Generated</p>
-                        <p className="text-[10px] text-slate-500">0.4s processing</p>
+                        <p className="text-xs font-bold text-foreground dark:text-white">Code Generated</p>
+                        <p className="text-[10px] text-muted-foreground">0.4s processing</p>
                     </div>
                  </div>
              </div>

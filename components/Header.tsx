@@ -102,7 +102,7 @@ export const Header: React.FC = () => {
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 animate-slide-down ${
         isScrolled 
-          ? 'bg-white/80 dark:bg-slate-950/80 backdrop-blur-md shadow-sm py-3' 
+          ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm py-3' 
           : 'bg-transparent py-4 md:py-5'
       }`}
     >
@@ -120,8 +120,8 @@ export const Header: React.FC = () => {
               onClick={(e) => handleLinkClick(e, link.id)}
               className={`text-sm font-medium transition-colors relative group ${
                 activeSection === link.id 
-                  ? 'text-[#009DFF] dark:text-[#64E1FF]' 
-                  : 'text-slate-600 dark:text-slate-300 hover:text-[#009DFF] dark:hover:text-[#64E1FF]'
+                  ? 'text-[#009DFF]' 
+                  : 'text-slate-600 dark:text-slate-300 hover:text-[#009DFF] dark:hover:text-[#009DFF]'
               }`}
             >
               {link.name}
@@ -133,9 +133,8 @@ export const Header: React.FC = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-           {/* Theme Toggle (Desktop) */}
-           <ThemeToggle />
-
+          <ThemeToggle />
+          
           {/* Language Selector (Desktop) */}
           <div className="relative" ref={langMenuRef}>
             <button 
@@ -188,7 +187,7 @@ export const Header: React.FC = () => {
 
       {/* Mobile Nav */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 p-4 flex flex-col gap-4 shadow-lg animate-fade-in-up duration-300 origin-top h-[calc(100vh-64px)] overflow-y-auto">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 p-4 flex flex-col gap-4 shadow-lg animate-fade-in-up duration-300 origin-top h-[calc(100vh-64px)] overflow-y-auto">
           {navLinks.map((link) => (
             <a 
               key={link.name} 
@@ -196,7 +195,7 @@ export const Header: React.FC = () => {
               onClick={(e) => handleLinkClick(e, link.id)}
               className={`text-lg font-medium py-2 px-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 ${
                 activeSection === link.id
-                  ? 'text-[#009DFF] dark:text-[#64E1FF]'
+                  ? 'text-[#009DFF]'
                   : 'text-slate-600 dark:text-slate-300'
               }`}
             >
@@ -206,17 +205,16 @@ export const Header: React.FC = () => {
           
           <div className="border-t border-slate-100 dark:border-slate-800 pt-4 mt-2">
             
-            {/* Mobile Theme Toggle */}
             <div className="flex items-center justify-between px-2 mb-4">
-                <span className="text-slate-600 dark:text-slate-300 font-medium">Appearance</span>
-                <ThemeToggle />
+               <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Appearance</span>
+               <ThemeToggle />
             </div>
 
             {/* Mobile Language Collapsible */}
             <div className="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800">
                 <button 
                     onClick={() => setIsMobileLangOpen(!isMobileLangOpen)}
-                    className="flex items-center justify-between w-full px-4 py-3 bg-slate-50 dark:bg-slate-800/50 text-left font-medium text-slate-700 dark:text-slate-200 active:bg-slate-100 dark:active:bg-slate-800 transition-colors"
+                    className="flex items-center justify-between w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 text-left font-medium text-slate-700 dark:text-slate-300 active:bg-slate-100 dark:active:bg-slate-800 transition-colors"
                 >
                     <span className="flex items-center gap-2">
                         <Globe size={18} className="text-[#009DFF]" />

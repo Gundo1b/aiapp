@@ -69,7 +69,7 @@ const models = [
 
 export const ModelShowcase: React.FC = () => {
   return (
-    <section className="py-20 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+    <section className="py-20 bg-secondary dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6">
         
         <ScrollReveal>
@@ -79,13 +79,13 @@ export const ModelShowcase: React.FC = () => {
               <span>Multi-Model Orchestration</span>
             </div>
             
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground dark:text-white mb-6">
               Every top model. <br/>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">
                 In a single conversation.
               </span>
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-300">
+            <p className="text-lg text-muted-foreground dark:text-slate-300">
               Don't settle for one intelligence. Switch seamlessly between GPT-4o for logic, Claude for writing, and Gemini for data—all within the same chat thread.
             </p>
           </div>
@@ -95,12 +95,12 @@ export const ModelShowcase: React.FC = () => {
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-16">
           {models.map((model, index) => (
             <ScrollReveal key={model.name} delay={index * 100}>
-              <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-default group text-center h-full flex flex-col items-center justify-center relative overflow-hidden">
+              <div className="p-6 rounded-2xl border border-border dark:border-slate-800 bg-card/50 dark:bg-slate-900/50 hover:bg-card dark:hover:bg-slate-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-default group text-center h-full flex flex-col items-center justify-center relative overflow-hidden">
                 <div className={`w-16 h-16 rounded-2xl ${model.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
                   <model.icon className="w-8 h-8" />
                 </div>
-                <h3 className="font-bold text-slate-900 dark:text-white text-base mb-1">{model.name}</h3>
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-400 dark:text-slate-500">
+                <h3 className="font-bold text-foreground dark:text-white text-base mb-1">{model.name}</h3>
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground dark:text-slate-500">
                    Provider
                 </span>
                 
@@ -113,27 +113,27 @@ export const ModelShowcase: React.FC = () => {
 
         {/* Visual Demo of Switching */}
         <ScrollReveal delay={300}>
-          <Spotlight className="max-w-4xl mx-auto rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
-            <div className="p-1 bg-slate-100 dark:bg-slate-800 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-700">
+          <Spotlight className="max-w-4xl mx-auto rounded-3xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900 shadow-2xl overflow-hidden">
+            <div className="p-1 bg-secondary dark:bg-slate-800 flex items-center justify-between px-4 border-b border-border dark:border-slate-700">
               <div className="flex gap-1.5 py-3">
                 <div className="w-3 h-3 rounded-full bg-red-400"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
                 <div className="w-3 h-3 rounded-full bg-green-400"></div>
               </div>
-              <div className="text-xs font-mono text-slate-400">Integen_Studio_v1.0</div>
+              <div className="text-xs font-mono text-muted-foreground">Integen_Studio_v1.0</div>
             </div>
 
             <div className="p-6 md:p-10 space-y-6">
               {/* Message 1: User Request */}
               <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400">
+                <div className="w-8 h-8 rounded-full bg-secondary dark:bg-slate-800 flex items-center justify-center shrink-0 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-400">
                   <User className="w-5 h-5" />
                 </div>
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-slate-900 dark:text-white">You</span>
+                    <span className="text-xs font-bold text-foreground dark:text-white">You</span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">Generate a React component for a pricing card.</p>
+                  <p className="text-sm text-muted-foreground dark:text-slate-300">Generate a React component for a pricing card.</p>
                 </div>
               </div>
 
@@ -144,12 +144,12 @@ export const ModelShowcase: React.FC = () => {
                 </div>
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-slate-900 dark:text-white">Integen AI</span>
+                    <span className="text-xs font-bold text-foreground dark:text-white">Integen AI</span>
                     <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800 font-medium flex items-center gap-1">
                       <OpenAIIcon className="w-3 h-3" /> via GPT-4o
                     </span>
                   </div>
-                  <div className="p-3 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-600 dark:text-slate-400">
+                  <div className="p-3 bg-secondary dark:bg-slate-950 rounded-lg border border-border dark:border-slate-800 font-mono text-xs text-muted-foreground dark:text-slate-400">
                     {`export const PricingCard = ({ title, price }) => (`}<br/>
                     &nbsp;&nbsp;{`<div className="p-6 border rounded-xl">...</div>`}<br/>
                     {`)`}
@@ -159,7 +159,7 @@ export const ModelShowcase: React.FC = () => {
 
               {/* Action: Switching Model */}
               <div className="flex justify-center py-2">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-medium border border-blue-100 dark:border-blue-800 animate-pulse">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 dark:bg-blue-900/20 text-primary dark:text-blue-400 text-xs font-medium border border-primary/20 dark:border-blue-800 animate-pulse">
                   <MessageSquareMore size={12} />
                   Switching context to Claude 3.5 Sonnet...
                 </div>
@@ -167,14 +167,14 @@ export const ModelShowcase: React.FC = () => {
 
               {/* Message 2: User Request */}
               <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400">
+                <div className="w-8 h-8 rounded-full bg-secondary dark:bg-slate-800 flex items-center justify-center shrink-0 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-400">
                    <User className="w-5 h-5" />
                 </div>
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-slate-900 dark:text-white">You</span>
+                    <span className="text-xs font-bold text-foreground dark:text-white">You</span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">Now rewrite the copy on that card to be more persuasive and catchy.</p>
+                  <p className="text-sm text-muted-foreground dark:text-slate-300">Now rewrite the copy on that card to be more persuasive and catchy.</p>
                 </div>
               </div>
 
@@ -185,12 +185,12 @@ export const ModelShowcase: React.FC = () => {
                 </div>
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-slate-900 dark:text-white">Integen AI</span>
+                    <span className="text-xs font-bold text-foreground dark:text-white">Integen AI</span>
                     <span className="text-[10px] px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-800 font-medium flex items-center gap-1">
                       <AnthropicIcon className="w-3 h-3" /> via Claude 3.5 Sonnet
                     </span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">
+                  <p className="text-sm text-muted-foreground dark:text-slate-300">
                     Here is a punchier version focused on value: <br/>
                     <span className="italic text-slate-500">"Unlock your potential today. One simple price, infinite creative power."</span>
                   </p>

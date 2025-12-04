@@ -13,12 +13,12 @@ export const Button: React.FC<ButtonProps> = ({
   ...props 
 }) => {
   // Added transform, active:scale-95, and hover:-translate-y-0.5 for animation
-  const baseStyles = "inline-flex items-center justify-center rounded-full font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95 hover:-translate-y-0.5";
+  const baseStyles = "inline-flex items-center justify-center rounded-full font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95 hover:-translate-y-0.5";
   
   const variants = {
-    primary: "bg-gradient-to-r from-[#64E1FF] to-[#009DFF] text-white hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-blue-900/30 border border-transparent",
-    secondary: "bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-sm",
-    outline: "bg-transparent border border-[#009DFF] text-[#009DFF] hover:bg-blue-50 dark:hover:bg-blue-900/20"
+    primary: "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-blue-900/30 border border-transparent",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border shadow-sm",
+    outline: "bg-transparent border border-primary text-primary hover:bg-blue-50 dark:hover:bg-blue-900/20"
   };
 
   const sizes = {
