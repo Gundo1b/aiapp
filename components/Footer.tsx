@@ -2,11 +2,15 @@ import React from 'react';
 import { Twitter, Github, Linkedin } from 'lucide-react';
 import { Logo } from './Logo';
 import { ScrollReveal } from './ScrollReveal';
+import { GradientWaves } from './ui/BackgroundEffects';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-900 dark:bg-black text-slate-300 py-16 transition-colors duration-300">
-      <div className="container mx-auto px-4 md:px-6">
+    <footer className="relative bg-slate-900 dark:bg-black text-slate-300 pt-24 pb-16 transition-colors duration-300">
+      {/* Wave transition at top */}
+      <GradientWaves />
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div className="col-span-1 md:col-span-1">

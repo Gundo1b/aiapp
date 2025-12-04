@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from './Button';
 import { ArrowRight } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
+import { FluidBlob } from './ui/BackgroundEffects';
 
 export const CallToAction: React.FC = () => {
   const handleJoin = () => {
@@ -15,8 +16,8 @@ export const CallToAction: React.FC = () => {
       <div className="container mx-auto px-4 md:px-6 text-center">
         <ScrollReveal duration="1000ms">
           <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-3xl p-8 md:p-16 shadow-2xl border border-blue-100 dark:border-slate-800 relative overflow-hidden group transition-colors duration-300">
-             {/* Background Decoration */}
-             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#64E1FF] to-[#009DFF] opacity-10 dark:opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 animate-blob"></div>
+             {/* Background Decoration with Fluid Blob */}
+             <FluidBlob className="top-0 right-0 w-[400px] h-[400px] -translate-y-1/2 translate-x-1/2 opacity-20" color1="#64E1FF" color2="#009DFF" />
              <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-200 dark:bg-purple-900 opacity-20 dark:opacity-10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 animate-blob animation-delay-2000"></div>
 
              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 relative z-10">

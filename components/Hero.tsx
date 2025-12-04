@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from './Button';
-import { ArrowRight, PlayCircle, Sparkles, Send, Mic, Image as ImageIcon, MoreVertical, Battery, Wifi, Signal, ChevronDown } from 'lucide-react';
+import { ArrowRight, PlayCircle, Sparkles, Send, Mic, Image as ImageIcon, MoreVertical, Wifi, Signal, ChevronDown } from 'lucide-react';
 import { LogoIcon } from './Logo';
 import { TextReveal } from './ui/TextReveal';
+import { FluidBlob } from './ui/BackgroundEffects';
 
 export const Hero: React.FC = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [chatStep, setChatStep] = useState(0); // 0: Greeting, 1: User Msg, 2: Typing, 3: Response
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -19,6 +21,22 @@ export const Hero: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // Sequence the chat messages
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    
+    // Step 1: User message appears after 0.8s
+    timers.push(setTimeout(() => setChatStep(1), 800));
+    
+    // Step 2: Typing indicator appears after 1.8s
+    timers.push(setTimeout(() => setChatStep(2), 1800));
+    
+    // Step 3: Response appears (replacing typing) after 3.8s
+    timers.push(setTimeout(() => setChatStep(3), 3800));
+
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   const scrollToPricing = () => {
     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -29,19 +47,15 @@ export const Hero: React.FC = () => {
 
   return (
     <section className="relative pt-24 pb-12 md:pt-32 lg:pt-40 md:pb-20 overflow-hidden">
-      {/* Animated Aurora Background Effects with Parallax */}
+      {/* Dynamic Fluid Blobs with Parallax */}
       <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#64E1FF]/20 dark:bg-[#64E1FF]/10 rounded-full blur-[100px] -z-10 animate-blob transition-transform duration-100 ease-out" 
-        style={{ transform: `translate(calc(-50% + ${mousePos.x * -1}px), ${mousePos.y * -1}px)` }}
-      />
-      <div 
-        className="absolute top-20 right-0 w-[600px] h-[600px] bg-[#a78bfa]/20 dark:bg-[#a78bfa]/10 rounded-full blur-[120px] -z-10 animate-blob animation-delay-2000 transition-transform duration-100 ease-out" 
-        style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}
-      />
-      <div 
-        className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#009DFF]/10 dark:bg-[#009DFF]/5 rounded-full blur-[100px] -z-10 animate-blob animation-delay-4000 transition-transform duration-100 ease-out" 
-        style={{ transform: `translate(${mousePos.x * 2}px, ${mousePos.y * 2}px)` }}
-      />
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none"
+        style={{ transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px)` }}
+      >
+        <FluidBlob className="top-[-10%] left-[20%] w-[600px] h-[600px]" color1="#64E1FF" color2="#009DFF" />
+        <FluidBlob className="top-[20%] right-[-10%] w-[500px] h-[500px] animation-delay-2000" color1="#a78bfa" color2="#64E1FF" />
+        <FluidBlob className="bottom-[-10%] left-[-10%] w-[500px] h-[500px] animation-delay-4000" color1="#009DFF" color2="#a78bfa" />
+      </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -112,122 +126,158 @@ export const Hero: React.FC = () => {
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-[#009DFF]/30 to-[#64E1FF]/30 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
 
              {/* Phone Frame */}
-             <div className="relative mx-auto border-slate-900 dark:border-slate-800 bg-slate-900 border-[12px] rounded-[2.5rem] h-[600px] w-[300px] shadow-2xl animate-float">
-                {/* Camera/Sensor Notch */}
-                <div className="w-[120px] h-[20px] bg-slate-900 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute z-20"></div>
+             <div className="relative mx-auto border-slate-900 dark:border-slate-800 bg-slate-900 border-[12px] rounded-[3rem] h-[600px] w-[300px] shadow-2xl animate-float ring-1 ring-white/10">
+                {/* Camera/Sensor Dynamic Island */}
+                <div className="w-[90px] h-[24px] bg-black top-[10px] rounded-full left-1/2 -translate-x-1/2 absolute z-30 pointer-events-none"></div>
                 
                 {/* Side Buttons */}
-                <div className="h-[40px] w-[3px] bg-slate-800 absolute -start-[15px] top-[100px] rounded-s-lg"></div>
-                <div className="h-[70px] w-[3px] bg-slate-800 absolute -end-[15px] top-[140px] rounded-e-lg"></div>
+                <div className="h-[40px] w-[3px] bg-slate-800 absolute -start-[15px] top-[100px] rounded-s-lg shadow-sm"></div>
+                <div className="h-[70px] w-[3px] bg-slate-800 absolute -end-[15px] top-[140px] rounded-e-lg shadow-sm"></div>
 
                 {/* Screen Content */}
-                <div className="rounded-[2rem] overflow-hidden w-full h-full bg-[#F9FBFF] dark:bg-slate-950 flex flex-col relative">
+                <div className="rounded-[2.25rem] overflow-hidden w-full h-full bg-slate-50 dark:bg-slate-950 flex flex-col relative z-0">
                     
+                    {/* Wallpaper Pattern */}
+                    <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(#000000_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+
                     {/* Status Bar */}
-                    <div className="h-12 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-6 pt-2 z-10 sticky top-0 border-b border-slate-100 dark:border-slate-800">
-                        <span className="text-xs font-bold text-slate-900 dark:text-white">9:41</span>
-                        <div className="flex gap-1.5 text-slate-900 dark:text-white">
-                            <Signal size={12} />
-                            <Wifi size={12} />
-                            <Battery size={12} />
+                    <div className="h-14 px-6 pt-3 flex items-center justify-between z-20 text-slate-900 dark:text-white select-none">
+                        <span className="text-[15px] font-semibold tracking-wide pl-1">9:41</span>
+                        <div className="flex gap-1.5 items-center pr-1">
+                            <Signal className="w-[18px] h-[18px]" strokeWidth={2.5} />
+                            <Wifi className="w-[18px] h-[18px]" strokeWidth={2.5} />
+                            {/* Custom Battery Icon */}
+                            <div className="w-[24px] h-[11px] border-2 border-current rounded-[3px] relative ml-0.5 opacity-90">
+                                <div className="absolute inset-[1.5px] bg-current rounded-[1px] w-[70%]"></div>
+                                <div className="absolute -right-[4px] top-1/2 -translate-y-1/2 w-[2px] h-[4px] bg-current rounded-r-[1px]"></div>
+                            </div>
                         </div>
                     </div>
 
                     {/* Chat Header */}
-                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 z-10 sticky top-12">
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center text-white">
+                    <div className="px-4 py-2 flex items-center justify-between z-20 backdrop-blur-md bg-white/70 dark:bg-slate-900/70 sticky top-0 border-b border-slate-200/50 dark:border-slate-800/50">
+                        <div className="flex items-center gap-2.5">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center text-white shadow-sm ring-2 ring-white dark:ring-slate-800">
                                 <LogoIcon className="w-5 h-5 text-white" />
                             </div>
-                            <div className="flex items-center gap-1 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 px-2 py-1 rounded-lg transition-colors">
-                                <div>
-                                    <h3 className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-none">Model</h3>
-                                    <p className="text-sm font-bold text-slate-900 dark:text-white leading-none flex items-center gap-1">
-                                        GPT-4o <ChevronDown size={12} />
-                                    </p>
+                            <div className="flex flex-col">
+                                <div className="flex items-center gap-1 cursor-pointer hover:opacity-70 transition-opacity">
+                                    <span className="text-sm font-bold text-slate-900 dark:text-white leading-none">Integen AI</span>
+                                    <div className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-800 rounded text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
+                                      Beta
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-1 cursor-pointer">
+                                  <span className="text-[11px] font-medium text-[#009DFF]">GPT-4o</span>
+                                  <ChevronDown size={10} className="text-[#009DFF]" />
                                 </div>
                             </div>
                         </div>
-                        <MoreVertical size={18} className="text-slate-400" />
+                        <button className="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition-colors">
+                           <MoreVertical size={20} className="text-slate-500 dark:text-slate-400" />
+                        </button>
                     </div>
 
                     {/* Messages Area */}
-                    <div className="flex-1 p-4 space-y-6 overflow-hidden">
+                    <div className="flex-1 px-4 py-4 space-y-5 overflow-y-auto overflow-x-hidden relative z-10 scrollbar-none">
                         
-                        {/* AI Greeting */}
-                        <div className="flex items-start gap-3 animate-fade-in-up">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center shrink-0">
-                                <LogoIcon className="w-5 h-5 text-white" />
+                        {/* AI Greeting - Always Visible */}
+                        <div className={`flex items-start gap-2.5 animate-scale-up origin-bottom-left`}>
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center shrink-0 shadow-sm mt-1">
+                                <LogoIcon className="w-4 h-4 text-white" />
                             </div>
-                            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[85%]">
-                                <p className="text-sm text-slate-700 dark:text-slate-300">
+                            <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm max-w-[85%]">
+                                <p className="text-[15px] leading-relaxed text-slate-700 dark:text-slate-200">
                                     Hello! I'm ready to help. You can switch models anytime.
                                 </p>
                             </div>
                         </div>
 
-                        {/* User Question */}
-                        <div className="flex items-end justify-end animate-fade-in-up animate-delay-500">
-                            <div className="bg-[#009DFF] text-white rounded-2xl rounded-tr-none p-3 shadow-sm max-w-[85%]">
-                                <p className="text-sm">
-                                    Write a Python script for stock analysis.
-                                </p>
+                        {/* User Question - Visible from Step 1 */}
+                        {chatStep >= 1 && (
+                            <div className="flex items-end justify-end animate-scale-up origin-bottom-right">
+                                <div className="bg-[#009DFF] text-white rounded-2xl rounded-tr-none px-4 py-3 shadow-md shadow-blue-500/10 max-w-[85%]">
+                                    <p className="text-[15px] leading-relaxed">
+                                        Write a Python script for stock analysis.
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        )}
 
-                        {/* AI Thinking/Typing */}
-                        <div className="flex items-start gap-3 animate-fade-in-up animate-delay-1000">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center shrink-0">
-                                <LogoIcon className="w-5 h-5 text-white" />
-                            </div>
-                            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[85%] w-full">
-                                <div className="flex items-center gap-2 mb-2">
-                                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">
-                                        GPT-4o
-                                     </span>
+                        {/* AI Typing Indicator - Visible at Step 2 only */}
+                        {chatStep === 2 && (
+                            <div className="flex items-start gap-2.5 animate-scale-up origin-bottom-left">
+                                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center shrink-0 shadow-sm mt-1">
+                                    <LogoIcon className="w-4 h-4 text-white" />
                                 </div>
-                                <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-                                    Sure! Here's a script using <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded text-xs">yfinance</code>:
-                                </p>
-                                <div className="bg-slate-950 rounded-lg p-3 my-2 border border-slate-800 relative group overflow-hidden">
-                                     {/* Code shimmers */}
-                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
-                                     <div className="font-mono text-[10px] text-slate-300 leading-relaxed">
-                                        <span className="text-purple-400">import</span> yfinance <span className="text-purple-400">as</span> yf<br/>
-                                        <span className="text-purple-400">import</span> pandas <span className="text-purple-400">as</span> pd<br/>
-                                        <br/>
-                                        <span className="text-blue-400">def</span> <span className="text-yellow-300">analyze_stock</span>(ticker):<br/>
-                                        &nbsp;&nbsp;data = yf.Ticker(ticker)<br/>
-                                        &nbsp;&nbsp;<span className="text-slate-500"># Fetch history...</span>
-                                     </div>
+                                <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm">
+                                    <div className="flex gap-1.5 py-1">
+                                        <div className="w-1.5 h-1.5 bg-slate-400 dark:bg-slate-500 rounded-full animate-typing-bounce" style={{ animationDelay: '0ms' }}></div>
+                                        <div className="w-1.5 h-1.5 bg-slate-400 dark:bg-slate-500 rounded-full animate-typing-bounce" style={{ animationDelay: '150ms' }}></div>
+                                        <div className="w-1.5 h-1.5 bg-slate-400 dark:bg-slate-500 rounded-full animate-typing-bounce" style={{ animationDelay: '300ms' }}></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
+
+                        {/* AI Response - Visible from Step 3 */}
+                        {chatStep >= 3 && (
+                            <div className="flex items-start gap-2.5 animate-scale-up origin-bottom-left">
+                                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#64E1FF] to-[#009DFF] flex items-center justify-center shrink-0 shadow-sm mt-1">
+                                    <LogoIcon className="w-4 h-4 text-white" />
+                                </div>
+                                <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[90%] w-full">
+                                    <div className="flex items-center gap-2 mb-2">
+                                         <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800/50">
+                                            GPT-4o
+                                         </span>
+                                    </div>
+                                    <p className="text-[14px] leading-relaxed text-slate-700 dark:text-slate-200 mb-2.5 px-1">
+                                        Sure! Here's a script using <code className="bg-slate-100 dark:bg-slate-900 px-1 py-0.5 rounded text-xs font-mono text-pink-500">yfinance</code>:
+                                    </p>
+                                    <div className="bg-slate-900 rounded-xl p-3.5 my-1 border border-slate-800 relative group overflow-hidden shadow-inner">
+                                         {/* Code shimmers */}
+                                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
+                                         <div className="font-mono text-[11px] text-slate-300 leading-relaxed overflow-x-auto">
+                                            <span className="text-purple-400">import</span> yfinance <span className="text-purple-400">as</span> yf<br/>
+                                            <span className="text-purple-400">import</span> pandas <span className="text-purple-400">as</span> pd<br/>
+                                            <br/>
+                                            <span className="text-blue-400">def</span> <span className="text-yellow-300">analyze_stock</span>(ticker):<br/>
+                                            &nbsp;&nbsp;data = yf.Ticker(ticker)<br/>
+                                            &nbsp;&nbsp;<span className="text-slate-500"># Fetch history...</span>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {/* Spacer for bottom bar */}
+                        <div className="h-4"></div>
                     </div>
 
                     {/* Input Area */}
-                    <div className="bg-white dark:bg-slate-900 p-4 border-t border-slate-100 dark:border-slate-800 z-10 sticky bottom-0">
-                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 p-2 rounded-full border border-slate-200 dark:border-slate-700">
-                             <button className="p-2 text-slate-400 hover:text-[#009DFF] transition-colors rounded-full">
-                                <ImageIcon size={18} />
+                    <div className="p-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-800/50 z-20 pb-6">
+                        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-full border border-slate-200 dark:border-slate-700/50 shadow-inner">
+                             <button className="p-2 text-slate-400 hover:text-[#009DFF] transition-colors rounded-full hover:bg-white dark:hover:bg-slate-700">
+                                <ImageIcon size={20} strokeWidth={1.5} />
                              </button>
                              <input 
                                 type="text" 
-                                placeholder="Ask anything..." 
-                                className="flex-1 bg-transparent border-none outline-none text-sm text-slate-900 dark:text-white placeholder:text-slate-400"
+                                placeholder="Message..." 
+                                className="flex-1 bg-transparent border-none outline-none text-[15px] text-slate-900 dark:text-white placeholder:text-slate-400 px-1"
                              />
-                             <button className="p-2 text-slate-400 hover:text-[#009DFF] transition-colors rounded-full">
-                                <Mic size={18} />
+                             <button className="p-2 text-slate-400 hover:text-[#009DFF] transition-colors rounded-full hover:bg-white dark:hover:bg-slate-700">
+                                <Mic size={20} strokeWidth={1.5} />
                              </button>
-                             <button className="p-2 bg-[#009DFF] text-white rounded-full hover:shadow-lg transition-all active:scale-95">
-                                <Send size={14} />
+                             <button className="p-2 bg-[#009DFF] text-white rounded-full hover:shadow-lg hover:shadow-blue-500/30 transition-all active:scale-95 flex items-center justify-center w-9 h-9">
+                                <Send size={16} className="ml-0.5" />
                              </button>
                         </div>
-                        <div className="w-1/3 h-1 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mt-4"></div>
+                        {/* Home Indicator */}
+                        <div className="w-32 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mt-4 mb-1"></div>
                     </div>
 
-                    {/* Overlay Gradient for "Depth" */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none rounded-[2rem]"></div>
+                    {/* Overlay Gradient for "Glass" feel */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-transparent pointer-events-none rounded-[2.25rem] z-30 ring-1 ring-inset ring-white/10"></div>
                 </div>
              </div>
 

@@ -3,6 +3,7 @@ import { MessageSquare, Code2, Image as ImageIcon, Video, Mic, Wand2 } from 'luc
 import { Feature } from '../types';
 import { ScrollReveal } from './ScrollReveal';
 import { Spotlight } from './ui/Spotlight';
+import { ParticleCanvas } from './ui/BackgroundEffects';
 
 const features: Feature[] = [
   {
@@ -68,6 +69,9 @@ const TypingCommand = ({ text }: { text: string }) => {
 export const Features: React.FC = () => {
   return (
     <section id="features" className="pt-0 pb-24 relative overflow-hidden">
+      {/* Particles Background */}
+      <ParticleCanvas />
+      
       {/* Ambient Background Blobs */}
       <div className="absolute inset-0 pointer-events-none -z-10">
         <div className="absolute top-[10%] left-[5%] w-96 h-96 bg-[#64E1FF]/5 dark:bg-[#64E1FF]/5 rounded-full blur-[80px] animate-blob"></div>
