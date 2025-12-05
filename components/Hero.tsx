@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Button } from './Button';
-import { ArrowRight, PlayCircle, Sparkles, Send, Mic, Image as ImageIcon, MoreVertical, Wifi, Signal, ChevronDown } from 'lucide-react';
+import { ArrowRight, PlayCircle, Sparkles, Send, Mic, Image as ImageIcon, MoreVertical, Wifi, Signal, ChevronDown, Database, Zap } from 'lucide-react';
 import { LogoIcon } from './Logo';
 import { TextReveal } from './ui/TextReveal';
-import { FluidBlob } from './ui/BackgroundEffects';
+import { FluidBlob, ShootingStars } from './ui/BackgroundEffects';
 
 export const Hero: React.FC = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [chatStep, setChatStep] = useState(0); // 0: Greeting, 1: User Msg, 2: Typing, 3: Response
+  const [scrollY, setScrollY] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -17,8 +19,21 @@ export const Hero: React.FC = () => {
       });
     };
 
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        // Calculate scroll progress relative to the hero section height
+        const offset = window.scrollY;
+        // Cap it so they don't fly off too far or invert too much
+        setScrollY(Math.min(offset, 600)); 
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   // Sequence the chat messages
@@ -46,7 +61,10 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative pt-24 pb-12 md:pt-32 lg:pt-40 md:pb-20 overflow-hidden">
+    <section ref={sectionRef} className="relative pt-24 pb-12 md:pt-32 lg:pt-40 md:pb-20 overflow-hidden min-h-[90vh]">
+      {/* Background Effects */}
+      <ShootingStars />
+      
       {/* Dynamic Fluid Blobs with Parallax */}
       <div 
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none"
@@ -73,7 +91,7 @@ export const Hero: React.FC = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground dark:text-white mb-4 md:mb-6 leading-tight">
               <TextReveal distance={50} stiffness={30} damping={18}>One platform, endless</TextReveal> <br />
               <TextReveal 
-                className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-500 to-[#a78bfa]"
+                className="text-[#64E1FF] drop-shadow-[0_0_15px_rgba(100,225,255,0.3)]"
                 delay={0.5}
                 distance={50}
                 stiffness={30}
@@ -121,12 +139,12 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Mobile Phone Mockup (Second in DOM, Right on Desktop, Bottom on Mobile) */}
-          <div className="relative w-full perspective-1000 flex justify-center lg:justify-center order-2">
+          <div className="relative w-full perspective-1000 flex justify-center lg:justify-center order-2 mt-12 lg:mt-0">
              {/* Decorative Blobs behind the phone */}
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-primary/30 to-blue-400/30 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
 
              {/* Phone Frame */}
-             <div className="relative mx-auto border-slate-900 dark:border-slate-800 bg-slate-900 border-[12px] rounded-[3rem] h-[600px] w-[300px] shadow-2xl animate-float ring-1 ring-white/10">
+             <div className="relative mx-auto border-slate-900 dark:border-slate-800 bg-slate-900 border-[12px] rounded-[3rem] h-[600px] w-[300px] shadow-2xl animate-float ring-1 ring-white/10 z-10">
                 {/* Camera/Sensor Dynamic Island */}
                 <div className="w-[90px] h-[24px] bg-black top-[10px] rounded-full left-1/2 -translate-x-1/2 absolute z-30 pointer-events-none"></div>
                 
@@ -282,7 +300,12 @@ export const Hero: React.FC = () => {
              </div>
 
              {/* Floating Elements around phone */}
-             <div className="absolute top-[20%] right-[-10px] lg:right-[10%] bg-card dark:bg-slate-800 p-3 rounded-xl shadow-xl border border-border dark:border-slate-700 animate-float animation-delay-2000 z-20">
+             
+             {/* Card 1: Code Generated - Top Right, moves Left-Down */}
+             <div 
+                className="absolute top-[20%] right-[-10px] lg:right-[10%] bg-card dark:bg-slate-800 p-3 rounded-xl shadow-xl border border-border dark:border-slate-700 animate-float animation-delay-2000 z-20 transition-transform duration-100 ease-out"
+                style={{ transform: `translate(${-scrollY * 0.1}px, ${scrollY * 0.1}px)` }}
+            >
                  <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center text-purple-600 dark:text-purple-400">
                         <Sparkles size={16} />
@@ -293,6 +316,39 @@ export const Hero: React.FC = () => {
                     </div>
                  </div>
              </div>
+
+             {/* Card 2: Image Created - Bottom Left, moves Right-Up */}
+             <div 
+                className="absolute bottom-[25%] left-[-10px] lg:left-[5%] bg-card dark:bg-slate-800 p-3 rounded-xl shadow-xl border border-border dark:border-slate-700 animate-float z-0 transition-transform duration-100 ease-out"
+                style={{ transform: `translate(${scrollY * 0.1}px, ${-scrollY * 0.1}px)` }}
+             >
+                 <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-pink-100 dark:bg-pink-900/30 rounded-full flex items-center justify-center text-pink-600 dark:text-pink-400">
+                        <ImageIcon size={16} />
+                    </div>
+                    <div>
+                        <p className="text-xs font-bold text-foreground dark:text-white">Image Created</p>
+                        <p className="text-[10px] text-muted-foreground">1024x1024</p>
+                    </div>
+                 </div>
+             </div>
+
+             {/* Card 3: Context Saved - Top Left, moves Right-Down */}
+             <div 
+                className="absolute top-[15%] left-0 lg:left-[15%] bg-card dark:bg-slate-800 p-3 rounded-xl shadow-xl border border-border dark:border-slate-700 animate-float animation-delay-4000 z-0 transition-transform duration-100 ease-out hidden md:block"
+                style={{ transform: `translate(${scrollY * 0.15}px, ${scrollY * 0.1}px)` }}
+             >
+                 <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 dark:text-green-400">
+                        <Database size={16} />
+                    </div>
+                    <div>
+                        <p className="text-xs font-bold text-foreground dark:text-white">Context Saved</p>
+                        <p className="text-[10px] text-muted-foreground">Recall enabled</p>
+                    </div>
+                 </div>
+             </div>
+
           </div>
           
         </div>

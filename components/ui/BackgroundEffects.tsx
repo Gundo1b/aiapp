@@ -17,7 +17,7 @@ export const GradientWaves = () => {
 export const FluidBlob = ({ className = "", color1 = "#64E1FF", color2 = "#009DFF" }: { className?: string, color1?: string, color2?: string }) => {
   return (
     <div 
-      className={`absolute rounded-full blur-3xl opacity-40 mix-blend-multiply dark:mix-blend-screen filter animate-morph ${className}`}
+      className={`absolute rounded-full blur-3xl opacity-20 dark:opacity-40 dark:mix-blend-screen filter animate-morph ${className}`}
       style={{
         background: `linear-gradient(to right, ${color1}, ${color2})`,
       }}
@@ -26,7 +26,7 @@ export const FluidBlob = ({ className = "", color1 = "#64E1FF", color2 = "#009DF
 };
 
 // Particle Canvas for tech effect
-export const ParticleCanvas = () => {
+export const ParticleCanvas = ({ connect = false }: { connect?: boolean }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   useEffect(() => {
@@ -39,15 +39,15 @@ export const ParticleCanvas = () => {
     let h = canvas.height = canvas.parentElement?.offsetHeight || window.innerHeight;
     
     const particles: {x: number, y: number, r: number, dx: number, dy: number, a: number}[] = [];
-    const count = 40; // Number of particles
+    const count = 50; // Number of particles
     
     for(let i=0; i<count; i++) {
       particles.push({
         x: Math.random() * w,
         y: Math.random() * h,
         r: Math.random() * 2 + 0.5,
-        dx: (Math.random() - 0.5) * 0.3,
-        dy: (Math.random() - 0.5) * 0.3,
+        dx: (Math.random() - 0.5) * 0.4,
+        dy: (Math.random() - 0.5) * 0.4,
         a: Math.random() * 0.5 + 0.1
       });
     }
@@ -57,7 +57,7 @@ export const ParticleCanvas = () => {
     const animate = () => {
       ctx.clearRect(0,0,w,h);
       
-      particles.forEach(p => {
+      particles.forEach((p, i) => {
         p.x += p.dx;
         p.y += p.dy;
         
@@ -72,6 +72,25 @@ export const ParticleCanvas = () => {
         // Using brand colors for particles
         ctx.fillStyle = `rgba(100, 225, 255, ${p.a})`;
         ctx.fill();
+
+        // Draw connections
+        if (connect) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 120) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(100, 225, 255, ${0.15 * (1 - distance / 120)})`;
+              ctx.lineWidth = 0.5;
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        }
       });
       
       animationFrameId = requestAnimationFrame(animate);
@@ -90,7 +109,120 @@ export const ParticleCanvas = () => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
     }
-  }, []);
+  }, [connect]);
   
   return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0 opacity-40" />;
+}
+
+// Shooting Stars Effect
+export const ShootingStars = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let w = canvas.width = canvas.parentElement?.offsetWidth || window.innerWidth;
+    let h = canvas.height = canvas.parentElement?.offsetHeight || window.innerHeight;
+
+    interface Star {
+      x: number;
+      y: number;
+      len: number;
+      speed: number;
+      opacity: number;
+    }
+
+    const stars: Star[] = [];
+    const maxStars = 3; // Keep it subtle
+
+    const animate = () => {
+      // Semi-transparent clear to create trails
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.3)';
+      ctx.fillRect(0, 0, w, h);
+      // But for cleaner transparency over other elements, we might just clearRect
+      // and let the star draw its own trail/fade.
+      // Let's use clearRect to avoid background color conflict, 
+      // but standard shooting stars usually fade out.
+      ctx.clearRect(0,0,w,h);
+
+      // Randomly add star
+      if (stars.length < maxStars && Math.random() < 0.02) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * (h * 0.5), // Top half mostly
+          len: Math.random() * 80 + 100,
+          speed: Math.random() * 15 + 10,
+          opacity: 1
+        });
+      }
+
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        
+        const angle = Math.PI / 4; // 45 degrees
+        s.x += s.speed * Math.cos(angle);
+        s.y += s.speed * Math.sin(angle);
+        s.opacity -= 0.015;
+
+        if (s.opacity <= 0 || s.x > w || s.y > h) {
+          stars.splice(i, 1);
+          i--;
+          continue;
+        }
+
+        const gradient = ctx.createLinearGradient(
+          s.x, s.y, 
+          s.x - s.len * Math.cos(angle), 
+          s.y - s.len * Math.sin(angle)
+        );
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${s.opacity})`);
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        ctx.beginPath();
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.len * Math.cos(angle), s.y - s.len * Math.sin(angle));
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(animate);
+    };
+
+    const animId = requestAnimationFrame(animate);
+
+    const handleResize = () => {
+        if (canvas.parentElement) {
+            w = canvas.width = canvas.parentElement.offsetWidth;
+            h = canvas.height = canvas.parentElement.offsetHeight;
+        }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animId);
+    };
+
+  }, []);
+
+  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-0" />;
+}
+
+// Retro Cyber Grid
+export const CyberGrid = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none perspective-[500px] z-0 opacity-20">
+       <div 
+        className="absolute inset-[-100%] bg-[linear-gradient(to_right,rgba(59,130,246,0.2)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.2)_1px,transparent_1px)] bg-[size:50px_50px] [transform:rotateX(60deg)] animate-grid-move origin-top"
+        style={{
+           maskImage: 'linear-gradient(to bottom, transparent, black 40%, black 80%, transparent)'
+        }}
+       />
+    </div>
+  )
 }

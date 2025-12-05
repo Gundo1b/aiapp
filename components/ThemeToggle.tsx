@@ -10,14 +10,16 @@ export const ThemeToggle: React.FC = () => {
   const isDark = resolvedTheme === 'dark';
 
   const handleCheckedChange = (checked: boolean) => {
-    setTheme(checked ? 'dark' : 'light');
+    if (checked) {
+      setTheme('dark');
+    }
   };
 
   return (
     <div className="flex items-center gap-2 group" role="group" aria-label="Theme toggle">
       <button 
         type="button"
-        onClick={() => setTheme('light')}
+        onClick={() => {}}
         className="focus:outline-none focus:ring-2 focus:ring-[#009DFF] rounded-full p-0.5"
         aria-label="Switch to Light Mode"
       >
@@ -36,6 +38,7 @@ export const ThemeToggle: React.FC = () => {
         onCheckedChange={handleCheckedChange} 
         aria-label="Toggle Dark Mode"
         title="Toggle Dark Mode"
+        disabled={true}
       />
       
       <button 

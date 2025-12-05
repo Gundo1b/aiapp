@@ -1,133 +1,103 @@
 import React from 'react';
-import { RoadmapPhase } from '../types';
 import { ScrollReveal } from './ScrollReveal';
-import { CheckCircle2 } from 'lucide-react';
+import { Palette, GraduationCap, Code2, Rocket, Building2, Check } from 'lucide-react';
+import { Spotlight } from './ui/Spotlight';
+import { CyberGrid } from './ui/BackgroundEffects';
 
-const audiences: RoadmapPhase[] = [
+const audiences = [
   {
-    version: 'Creators',
-    focus: '& Designers',
-    timeline: 'Visual & Narrative',
-    status: 'current',
-    items: [
-      'Unified visual and narrative creation',
-    ]
+    title: 'Creators & Designers',
+    description: 'For unified visual and narrative creation.',
+    icon: Palette,
+    items: ['Image Generation', 'Storyboarding', 'Design Iteration']
   },
   {
-    version: 'Students',
-    focus: '& Learners',
-    timeline: 'Education',
-    status: 'current',
-    items: [
-      'AI-aided learning and experimentation',
-    ]
+    title: 'Students & Learners',
+    description: 'For AI-aided learning and experimentation.',
+    icon: GraduationCap,
+    items: ['Tutoring', 'Research Summaries', 'Concept Explanations']
   },
   {
-    version: 'Developers',
-    focus: '& Engineers',
-    timeline: 'Code Assistance',
-    status: 'current',
-    items: [
-      'Fast, intelligent code assistance',
-    ]
+    title: 'Developers & Engineers',
+    description: 'For fast, intelligent code assistance.',
+    icon: Code2,
+    items: ['Code Refactoring', 'System Design', 'Bug Fixing']
   },
   {
-    version: 'Startups',
-    focus: '& Small Teams',
-    timeline: 'Growth',
-    status: 'current',
-    items: [
-      'Affordable, end-to-end creative power',
-    ]
+    title: 'Startups & Small Teams',
+    description: 'For affordable, end-to-end creative power.',
+    icon: Rocket,
+    items: ['Marketing Assets', 'Rapid Prototyping', 'Content Strategy']
   },
   {
-    version: 'Businesses',
-    focus: '& Enterprise',
-    timeline: 'Automation',
-    status: 'current',
-    items: [
-      'Integrated AI collaboration and automation',
-    ]
+    title: 'Businesses',
+    description: 'For integrated AI collaboration and automation.',
+    icon: Building2,
+    items: ['Workflow Automation', 'Team Collaboration', 'Secure Data Handling']
   }
 ];
 
 export const Roadmap: React.FC = () => {
   return (
-    <section id="audience" className="py-24 bg-secondary dark:bg-slate-950 overflow-hidden relative transition-colors duration-300">
-      {/* Background decorations */}
-      <div className="absolute top-1/4 left-0 w-[400px] h-[400px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[80px] -z-10 animate-pulse-slow"></div>
-      <div className="absolute bottom-1/4 right-0 w-[300px] h-[300px] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[80px] -z-10 animate-pulse-slow"></div>
+    <section id="audience" className="py-24 relative overflow-hidden bg-slate-950">
+      {/* Background Effects */}
+      <CyberGrid />
+      
+      {/* Ambient Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-900/20 blur-[120px] rounded-full pointer-events-none -z-10"></div>
 
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground dark:text-white mb-6">
-              Target <span className="text-primary">Audience</span>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+              Who is <span className="text-[#009DFF]">Integen AI</span> for?
             </h2>
-            <p className="text-lg text-muted-foreground dark:text-slate-300">
-              Integen AI is designed for:
+            <p className="text-lg text-slate-300 font-light">
+              Designed to empower every type of creator and builder.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="relative max-w-4xl mx-auto">
-          {/* Vertical Line - Enhanced contrast for light mode */}
-          <div className="absolute left-8 md:left-1/2 top-0 h-full w-0.5 bg-gradient-to-b from-primary via-blue-400 to-border dark:to-slate-800 md:-translate-x-1/2 origin-top animate-grow-height"></div>
-
-          <div className="space-y-12">
-            {audiences.map((phase, index) => {
-              const isEven = index % 2 === 0;
-              return (
-                <ScrollReveal 
-                  key={phase.version} 
-                  delay={index * 150}
-                  direction={window.innerWidth >= 768 ? (isEven ? 'right' : 'left') : 'up'}
-                >
-                  <div className={`flex flex-col md:flex-row items-start ${isEven ? 'md:flex-row-reverse' : ''} gap-8 relative`}>
-                    
-                    {/* Icon / Marker */}
-                    <div className="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-4 border-secondary dark:border-slate-950 z-10 flex items-center justify-center bg-card dark:bg-slate-900 shadow-sm">
-                       <div className={`w-full h-full rounded-full bg-primary animate-pulse`}></div>
-                    </div>
-
-                    {/* Spacer for desktop alignment */}
-                    <div className="hidden md:block flex-1"></div>
-
-                    {/* Content Card */}
-                    <div className="flex-1 w-full pl-20 md:pl-0">
-                      <div className={`relative bg-card dark:bg-slate-900 border border-border dark:border-primary/30 ring-1 ring-primary/10 dark:ring-primary/20 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group`}>
-                        
-                        {/* Connecting Line for Mobile */}
-                        <div className="md:hidden absolute top-6 left-0 w-20 h-0.5 bg-border dark:bg-slate-800 -translate-x-full"></div>
-
-                        <div className="flex items-center justify-between mb-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary dark:bg-blue-900/30 dark:text-blue-400 border border-primary/20 dark:border-transparent`}>
-                            Segment
-                          </span>
-                          <span className="text-sm font-mono text-muted-foreground">{phase.timeline}</span>
-                        </div>
-
-                        <h3 className="text-xl font-bold text-foreground dark:text-white mb-2 flex flex-wrap items-center gap-2">
-                          {phase.version} <span className="font-normal text-muted-foreground">|</span> {phase.focus}
-                        </h3>
-
-                        <ul className="space-y-3 mt-4">
-                          {phase.items.map((item, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-foreground dark:text-slate-300">
-                              <div className="mt-1 min-w-[16px]">
-                                <CheckCircle2 size={16} className="text-primary" />
-                              </div>
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {audiences.map((audience, index) => (
+            <ScrollReveal key={audience.title} delay={index * 100}>
+              <Spotlight className="h-full rounded-2xl bg-slate-900/40 backdrop-blur-md border border-white/10 group cursor-default">
+                <div className="p-8 h-full flex flex-col">
+                  <div className="mb-6 flex items-start justify-between">
+                    <div className="p-3 rounded-xl bg-blue-500/10 text-[#009DFF] group-hover:bg-[#009DFF] group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg shadow-blue-900/20">
+                      <audience.icon size={28} strokeWidth={1.5} />
                     </div>
                   </div>
-                </ScrollReveal>
-              );
-            })}
-          </div>
+
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#009DFF] transition-colors">
+                    {audience.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-6 leading-relaxed">
+                    {audience.description}
+                  </p>
+
+                  <div className="mt-auto space-y-3">
+                    {audience.items.map((item, i) => (
+                      <div 
+                        key={i} 
+                        className="flex items-center gap-3 text-sm text-slate-300 transform translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out"
+                        style={{ transitionDelay: `${i * 100}ms` }}
+                      >
+                        <div className="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
+                          <Check size={12} className="text-[#009DFF]" />
+                        </div>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                    {/* Placeholder for non-hover state to prevent layout shift */}
+                    <div className="text-sm text-slate-500 italic opacity-100 group-hover:opacity-0 transition-opacity duration-300 absolute bottom-8">
+                       Hover to see benefits...
+                    </div>
+                  </div>
+                </div>
+              </Spotlight>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>
